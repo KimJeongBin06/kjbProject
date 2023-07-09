@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="member">
+
+	<select id = "memberList" resultType = "com.spring.shop.vo.MemberVO">
+		SELECT mid, verify, mpwd, mname, mtel, memail, mzip, maddr1, maddr2, mddate, mrdate
+		FROM member ORDER BY mid
+	</select>
+
+	<!-- 회원가입 -->
+	<insert id = "insertMember">
+		INSERT INTO member
+		(mid, mpwd, mname, memail, mtel)
+		VALUES (#{mid},#{mpwd},#{mname},#{memail},#{mtel})
+		
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id = "loginMember" resultType ="com.spring.shop.vo.MemberVO">
+	SELECT mid, verify FROM member WHERE mid = #{mid} and mpwd = #{mpwd};
+	</select>
+	
+	<!-- 회원정보 수정 -->
+	<update id="memberUpdate">
+		update member set 
+		mpwd= #{mpwd},
+		memail=#{memail},
+		mtel=#{mtel}
+		
+		where mid = #{mid}
+	</update>
+	<select id="memberView" resultType ="com.spring.shop.vo.MemberVO">
+		SELECT mid, mname, memail, mtel FROM member WHERE mid=#{mid}
+	</select>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="memberDelete">
+		DELETE FROM member WHERE mid=#{mid}
+	</delete>
+
+</mapper>

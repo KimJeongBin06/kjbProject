@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="review">
+	<select id="listAll" resultType="com.spring.shop.vo.ReviewVO">
+		SELECT * FROM review INNER JOIN product ON review.pdnu=product.pdnu join member on review.mid=member.mid
+		<include refid="search"></include> <!-- 질의어에 해당부분을 추가 -->
+		<include refid="pagingFooter"></include>
+	</select> 
+	<!-- sql의 일부분을 분리해서 선언할 때 -->
+	<!-- == 같은것 찾을 때, like 포함되어 있는 것 찾을 때 -->
+	<!-- writer like 홍길동%-시작하는 단어, %홍길동-끝나는 단어, %홍길동%-포함된 단어  -->
+	<sql id = "search">
+		<choose>
+			<when test="searchOption == 'all'">
+				<!-- 모든곳에서 조회 -->
+				WHERE (revtitle like concat('%',#{keyword},'%')
+				OR member.mname like concat('%',#{keyword},'%')
+				OR review.pdnu like concat('%',#{keyword},'%')
+				OR product.pdname like concat('%',#{keyword},'%')) ORDER BY revdate DESC
+			</when>
+			<otherwise>
+				<!-- 해당부분에서만 조회 -->
+				WHERE (${searchOption} like concat('%',#{keyword},'%')) ORDER BY revdate DESC
+			</otherwise>
+		</choose>		
+	</sql>
+	<sql id="pagingFooter">
+		 LIMIT #{start}, #{end}
+	</sql>
+	<select id="countArticle" resultType="int">
+		SELECT COUNT(*) FROM review JOIN product ON review.pdnu=product.pdnu join member on review.mid=member.mid
+		<include refid="search"></include>
+	</select>
+	<update id="ratingAvg">
+		UPDATE review SET ratingavg=(SELECT round(avg(rating)) from review where pdnu=#{pdnu}) WHERE pdnu=#{pdnu};
+	</update>
+
+	
+	<select id="reviewView" resultType="com.spring.shop.vo.ReviewVO">
+		select * 
+		from review JOIN product ON review.pdnu=product.pdnu join member 
+		on member.mid=review.mid where revnum=#{revnum}
+	</select>
+	
+	<insert id="reviewInsert">
+		INSERT INTO review(pdnu, revtitle, revcontent, mid, revimg, rating) 
+		value(#{pdnu}, #{revtitle}, #{revcontent}, #{mid}, #{revimg}, #{rating})
+	</insert>
+	<insert id="revreplyInsert">
+		INSERT INTO revreply(revnum, revrid, mname, revrcontext)
+		VALUES(#{revnum}, #{revrid}, (SELECT member.mname FROM member WHERE member.mid = #{revrid}), #{revrcontext});
+	</insert>
+	
+	<select id="revreplyList" resultType="com.spring.shop.vo.RevreplyVO">
+		SELECT * FROM revreply WHERE revnum=#{revnum}
+	</select>
+	
+	<delete id="reviewDelete">
+		DELETE FROM review WHERE revnum = #{revnum}
+	</delete>
+	
+	<select id="reviewUpdateForm" resultType="com.spring.shop.vo.ReviewVO">
+		SELECT *  
+		FROM review WHERE revnum = #{revnum}
+	</select> 
+	
+	<update id="reviewUpdate">
+		UPDATE review SET 
+		
+		pdnu=#{pdnu}, 
+		revtitle=#{revtitle},
+		revcontent=#{revcontent},
+		revimg=#{revimg},
+		rating=#{rating}
+		
+		WHERE revnum=#{revnum}
+	</update> 
+</mapper>

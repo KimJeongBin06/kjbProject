@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.spring.shop.mapper.QuestionMapper">
+ 	
+ 	   <!-- 게시판 등록 -->
+    <insert id="enroll">
+        
+        insert into question(qtitle, qcontent, qwriter) values (#{qtitle}, #{qcontent}, #{qwriter})
+    </insert>
+      
+         
+          <!-- 게시판 목록 -->
+    <select id="getList" resultType="com.spring.shop.vo.QuestionVO">
+    
+        select * from question
+    
+    </select>
+    
+    <!-- 검색 조건문 -->
+    <sql id="questionCriteria">
+        <trim prefix="where (" suffix=")" prefixOverrides="OR">
+            <foreach collection="typeArr" item="type">
+                <trim prefix="OR">
+                    <choose>
+                        <when test="type == 'T'.toString()">
+                            qtitle like concat('%',#{keyword},'%') 
+                        </when>
+                        <when test="type == 'C'.toString()">
+                            qcontent like concat('%',#{keyword},'%') 
+                        </when>
+                        <when test="type == 'W'.toString()">
+                            qwriter like concat('%',#{keyword},'%' )
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>
+        </trim>
+    
+    </sql>  
+    
+    <!-- 게시물 목록(페이징) -->
+    <select id="getListPaging" resultType="com.spring.shop.vo.QuestionVO">
+    
+        select * from (
+                select qbno, qtitle, qwriter, qdate, qupdate 
+                from question 
+                <if test="keyword != null">
+                    <include refid="questionCriteria"></include>
+                </if>
+                order by qbno desc) as T1
+        limit #{skip},#{amount}
+    
+    </select>
+
+    <!-- 게시판 조회 -->
+    <select id="getPage" resultType="com.spring.shop.vo.QuestionVO">
+    
+        select * from question where qbno = #{qbno}
+    
+    </select>
+    
+     <!-- 게시판 수정 -->
+    <update id="modify">
+    
+        update question set qtitle = #{qtitle}, qcontent = #{qcontent}, qupdate = now() where qbno = #{qbno}	
+	
+ 	</update>
+ 	
+ 	<!-- 게시판 삭제 -->
+ 	<delete id="delete">
+ 	
+ 		delete from question where qbno = #{qbno}
+ 		
+ 	</delete>
+ 	
+ 	<!-- 게시물 총 개수 -->
+    <select id="getTotal" resultType="int">
+    
+        select count(*) from question
+        
+        <if test="keyword != null">
+        
+        	<include refid="questionCriteria"></include>
+    	
+    	</if>
+    </select>
+ 	
+  </mapper>
