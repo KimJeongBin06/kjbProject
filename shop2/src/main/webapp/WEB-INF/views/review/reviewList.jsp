@@ -82,11 +82,23 @@
 	<div id="page" class="single_page">
 	
 		<!-- BREADCRUMBS -->
-		<section class="breadcrumbs_block clearfix parallax">
-			<div class="container center">
-				<h2><b>Review</b></h2>
-			</div>
-		</section><!-- //BREADCRUMBS -->
+		<section class="breadcrumb-option">
+		    <div class="container">
+		        <div class="row">
+		            <div class="col-lg-12">
+		                <div class="breadcrumb__text">
+		                    <h4>Review</h4>
+		                    <div class="breadcrumb__links">
+		                        <a href="/">Home</a>
+		                        <span>Review</span>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</section>
+		<br>
+		
 		
 		<div style="text-align: center; padding:10px">
 			<select name="searchOption" style="height:30px; width:70px; border-radius:10px">

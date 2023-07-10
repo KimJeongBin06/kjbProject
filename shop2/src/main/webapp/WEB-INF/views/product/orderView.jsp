@@ -10,38 +10,66 @@
 <body>
 <%@ include file="../include/shop_menu.jsp" %>
 <div id="root">
+	<!-- Breadcrumb Section Begin -->
+	    <section class="breadcrumb-option">
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-lg-12">
+	                    <div class="breadcrumb__text">
+	                        <h4>OrderView</h4>
+	                        <div class="breadcrumb__links">
+	                            <a href="/">Home</a>
+	                            <a href="${path }/product/list?catecode=1">Shop</a>
+	                            <span>OrderView</span>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+	<section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
 
-	<section id="content">
-
-   <div class="orderInfo">
-    <c:forEach items="${orderView}" var="orderView" varStatus="status">
-     
-     <c:if test="${status.first}">
-      <p><span>수령인 ${orderView.orderRec}</p>
-      <p><span>주소 (${orderView.userAddr1}) ${orderView.userAddr2} ${orderView.userAddr3}</p>
-      <p><span>가격 ${orderView.amount}원</p>
-     </c:if>
-     
-    </c:forEach>
+			   <div class="orderInfo">
+			    <c:forEach items="${orderView}" var="orderView" varStatus="status">
+			     <c:if test="${status.first}">
+			     <table>
+				     <tr>
+					      <th width="200px">수령인</th>
+					      <th width="200px">주소</th>
+					      <th width="200px">가격</th>
+					 </tr> 
+			   		 <tr>
+			   		 	  <td>${orderView.orderRec}</td>
+					      <td>(${orderView.userAddr1}) ${orderView.userAddr2} ${orderView.userAddr3}</td>
+					      <td>${orderView.amount}원</td>
+			   		 </tr>			   		 
+			     </table>
+			     <br>
+			     </c:if>
+			    </c:forEach>
+			   </div>
+			   
    </div>
-   
-   <ul class="orderView">
-    <c:forEach items="${orderView}" var="orderView">       
-    <li>
-     <div class="thumb">
-      <img src="/resources/images/${orderView.pdimg1}" />
-     </div>
-     <div class="pdInfo">
-      <p>
-       <span>상품명 ${orderView.pdname}<br />
-       <span>개당 가격 ${orderView.pdprice}원<br />
-       <span>구입 수량 ${orderView.ctcnt} 개<br />
-       <span>최종 가격${orderView.pdprice * orderView.ctcnt}원                  
-      </p>
-     </div>
-    </li>       
-    </c:forEach>
-   </ul>
+	   <ul class="orderView">
+	    <c:forEach items="${orderView}" var="orderView">       
+	    <li>
+	     <div class="thumb">
+	      <img src="https://anjoimages.s3.amazonaws.com/${orderView.pdimg1}" />
+	     </div>
+	     <div class="pdInfo">
+	      <p>
+	       <span>${orderView.pdname}<br />
+	       <span>개당 가격: ${orderView.pdprice}원<br />
+	       <span>구입 수량: ${orderView.ctcnt} 개<br />
+	       <span>최종 가격: ${orderView.pdprice * orderView.ctcnt}원                  
+	      </p>
+	     </div>
+	    </li>       
+	    </c:forEach>
+	   </ul>
+   </div>
 </section>
 			
 		

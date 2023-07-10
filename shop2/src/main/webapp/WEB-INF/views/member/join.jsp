@@ -47,10 +47,66 @@
   				    alert("개인정보 수집에 동의해주세요");
   				    return;
 			}
-  			document.form1.submit();
+  			
+  			var idChkVal = $("#idChk").val();
+			if(idChkVal == "N"){
+				alert("아이디 중복확인을 해주세요");
+			}else if(idChkVal == "Y"){
+				$.ajax({
+					url : "/member/idChk",
+					type : "post",
+					dataType : "json",
+					data : {"mid" : document.form1.mid.value},
+					success : function(data){
+						if(data == 1){
+							$('.id_already').css("display","inline-block");
+		                    $('.id_ok').css("display", "none");
+		                    document.form1.mid.focus();
+		                    return;
+						}else if(data == 0){
+							$("#idChk").attr("value", "Y");
+							$('.id_ok').css("display","inline-block"); 
+		                    $('.id_already').css("display", "none");
+		    				document.form1.submit();
+						}
+					}
+				})
+
+			}
+			
+  			
   		})
   	}) 	
+  	function fn_idChk(){
+		$.ajax({
+			url : "/member/idChk",
+			type : "post",
+			dataType : "json",
+			data : {"mid" : document.form1.mid.value},
+			success : function(data){
+				if(data == 1){
+					$('.id_already').css("display","inline-block");
+                    $('.id_ok').css("display", "none");
+				}else if(data == 0){
+					$("#idChk").attr("value", "Y");
+					$('.id_ok').css("display","inline-block"); 
+                    $('.id_already').css("display", "none");
+				}
+			}
+		})
+	}
   </script>
+<style>
+	.id_ok{
+	color:#008000;
+	display: none;
+	}
+	
+	.id_already{
+	color:red; 
+	display: none;
+	}
+</style>
 </head>
 
 <body>
@@ -62,9 +118,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__text">
-                        <h4>Check Out</h4>
+                        <h4>Join</h4>
                         <div class="breadcrumb__links">
-                            <a href="./index.html">Home</a>
+                            <a href="/">Home</a>
                             <span>Join</span>
                         </div>
                     </div>
@@ -86,6 +142,11 @@
                             <div class="checkout__input">
                                 <p>아이디<span>*</span></p>
                                 <input type="text" name="mid">
+                                <span class="id_ok">사용 가능한 아이디입니다.</span>
+								<span class="id_already">중복된 아이디입니다.</span>   
+								<br> 
+                                <button class="site-btn" type="button" id="idChk" onclick="fn_idChk();" value="N">중복확인</button>
+                            
                             </div>
                             <div class="checkout__input">
                                 <p>비밀번호<span>*</span></p>

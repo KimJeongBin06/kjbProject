@@ -10,7 +10,23 @@
 <body>
 <%@ include file="../include/shop_menu.jsp" %>
 <div id="root">
-
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>OrderList</h4>
+                    <div class="breadcrumb__links">
+                        <a href="/">Home</a>
+                        <a href="${path }/product/list?catecode=1">Shop</a>
+                        <span>OrderList</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br>
 	
 	<section id="container">
 		<div id="container_box">

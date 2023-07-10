@@ -74,7 +74,15 @@ public class MemberServiceImpl implements MemberService {
 	public void detailDelete(List<OrderVO> orderlist) {
 		memberDao.detailDelete(orderlist);
 	}
+	
+	//아이디 중복체크
+	@Override
+	public int idChk(MemberVO vo) {
+		return memberDao.idChk(vo);
 	}
+	
+	
+}
 	
 	
 	

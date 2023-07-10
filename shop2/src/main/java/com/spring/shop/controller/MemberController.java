@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.shop.service.MemberService;
 import com.spring.shop.service.ProductService;
@@ -121,6 +122,12 @@ public class MemberController {
 		System.out.println(count);
 		memberService.memberDelete(mid);
 		return "redirect:/admin/memList";
+	}
+	@ResponseBody
+	@RequestMapping(value = "idChk", method = RequestMethod.POST)
+	public int idChk(MemberVO vo) {
+		int countid = memberService.idChk(vo);
+		return countid;
 	}
 	
 	

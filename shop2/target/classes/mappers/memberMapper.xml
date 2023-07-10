@@ -41,5 +41,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="memberDelete">
 		DELETE FROM member WHERE mid=#{mid}
 	</delete>
+	
+	<!-- 아이디 중복체크 -->
+	<select id="idchk" resultType="int">
+		SELECT COUNT(*) FROM member WHERE mid=#{mid}
+	</select>
 
 </mapper>

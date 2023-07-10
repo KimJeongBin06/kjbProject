@@ -72,6 +72,12 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 		
 	}
+	
+	//아이디 중복체크
+	@Override
+	public int idChk(MemberVO vo) {
+		return sql.selectOne(namespace + ".idchk", vo);
+	}
 
 	
 	

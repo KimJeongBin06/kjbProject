@@ -35,4 +35,7 @@ public interface MemberService {
 	public void ordersDelete(String mid);
 	
 	public void detailDelete(List<OrderVO> orderlist);
+	
+	//아이디 중복체크
+	public int idChk(MemberVO vo);
 }
