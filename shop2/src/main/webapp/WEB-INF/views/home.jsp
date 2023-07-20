@@ -27,6 +27,34 @@
     <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="resources/css/style.css" type="text/css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
+    <script>
+    var naverLogin = new naver.LoginWithNaverId(
+    		{
+    			clientId: "", //내 애플리케이션 정보에 cliendId를 입력해줍니다.
+    			callbackUrl: "", // 내 애플리케이션 API설정의 Callback URL 을 입력해줍니다.
+    			isPopup: false,
+    			callbackHandle: true
+    		}
+    	);	
+    var naverPopUp;
+    function openPopUp() {
+        naverPopUp= window.open("https://nid.naver.com/nidlogin.logout", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
+    }
+    function closePopUp(){
+        naverPopUp.close();
+    }
+
+    function naverLogout() {
+    	openPopUp();
+    	setTimeout(function() {
+    		closePopUp();
+    		location.href = "/member/logout";
+    		}, 100);
+    	
+    	
+    }
+    </script>
 </head>
 
 <body>
@@ -44,7 +72,7 @@
                 <a href="${path }/product/orderList">마이페이지</a>
             </div>
             <div class="offcanvas__top__hover">
-                <span>고객센터 <i class="arrow_carrot-down"></i></span>
+                <span>공지사항 <i class="arrow_carrot-down"></i></span>
                 <ul>
                     <li>asdfsdfa</li>
                     <li>Q&A</li>
@@ -81,25 +109,33 @@
                             
                                <c:choose> 
 	                            	<c:when test= "${sessionScope.member != null}">
-	                            	<a href="${path }/member/logout">로그아웃</a>
+		                            	<c:choose>
+		                            		<c:when test="${member.verify==3 }">
+				                            	<a href="javascript:void(0)" onclick="naverLogout(); return false;">
+										            <span>로그아웃</span>
+										        </a>
+									        </c:when>
+									        <c:otherwise>
+			                            		<a href="${path }/member/logout">로그아웃</a>	    
+			                            	</c:otherwise>                        								        		                            	
+		                            	</c:choose>
 	                            	</c:when>
 	                            	<c:when test= "${sessionScope.member == null}">
-	                            	<a href="${path }/member/login">로그인</a>
+	                            		<a href="${path }/member/login">로그인</a>
+	                            		<a href="${path }/member/join">회원가입</a>
 	                            	</c:when>
-	                            </c:choose>
-	                            
-                                <a href="${path }/member/join">회원가입</a>
+                            	</c:choose>                               	                          
                             </div>
                             <div class="header__top__hover">
-                            	<c:if test="${sessionScope.member.verify==1 }">
-                                	<span><a href="${path }/product/orderList">마이페이지 <i class="arrow_carrot-down"></i></a></span>
+                            	<c:if test="${sessionScope.member.verify==1 or sessionScope.member.verify==3}">
+                                	<span><a href="${path }/member/login">마이페이지 <i class="arrow_carrot-down"></i></a></span>
                                 </c:if>
                                 <c:if test="${sessionScope.member.verify==2 }">
                                 	<span><a href="${path }/admin/index">관리자페이지 <i class="arrow_carrot-down"></i></a></span>
                                 </c:if>
                                 <ul >
                                     <li text-align:center>관심상품</li>
-                                    <li text-align:center>주문조회</li>
+                                    <li text-align:center ><a href="${path }/product/orderList">주문조회</a></li>
                                     <li text-align:center>내가쓴글</li>
                                 </ul>
                             </div>

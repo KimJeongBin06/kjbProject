@@ -75,6 +75,8 @@
         <div class="container">
             <div class="checkout__form">
                     <div class="row">
+                    <%@ include file="../include/side_menu_my.jsp" %>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
                         <div class="col-lg-8 col-md-6">
                             <h3 class="checkout__title">회원 정보 수정</h3>
                             <div class="row">

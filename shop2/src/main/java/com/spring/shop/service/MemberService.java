@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import com.spring.shop.vo.CartVO;
 import com.spring.shop.vo.MemberVO;
 import com.spring.shop.vo.OrderVO;
+import com.spring.shop.vo.naverVO;
 
 public interface MemberService {
 	
@@ -38,4 +39,10 @@ public interface MemberService {
 	
 	//아이디 중복체크
 	public int idChk(MemberVO vo);
+	
+	public int naverChk(String id);
+	
+	public void naverJoin(naverVO naver);
+	
+	public MemberVO naverLogin(naverVO naver);
 }

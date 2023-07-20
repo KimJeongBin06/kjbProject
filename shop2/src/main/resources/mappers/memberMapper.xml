@@ -46,5 +46,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="idchk" resultType="int">
 		SELECT COUNT(*) FROM member WHERE mid=#{mid}
 	</select>
+	
+	<select id="naverchk" resultType="int">
+		SELECT COUNT(*) FROM naver WHERE id=#{id}
+	</select>
+	
+	<insert id="naverjoin">
+		INSERT INTO naver(id, mid) value(#{id}, #{mid})
+	</insert>
+	
+	<insert id="naverMember">
+		INSERT INTO member
+		(mid, mpwd, mname, memail, mtel, verify)
+		VALUES (#{mid},#{mpwd},#{mname},#{memail},#{mtel}, #{verify})
+	</insert>
+	
+	<select id="naverLogin" resultType="com.spring.shop.vo.MemberVO">
+		SELECT mid, verify FROM member WHERE mid = (SELECT mid FROM naver WHERE id = #{id})
+	</select>
 
 </mapper>

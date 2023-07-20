@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.shop.mapper.QuestionMapper;
+import com.spring.shop.vo.QandAVO;
 import com.spring.shop.vo.QuestionVO;
 import com.spring.shop.vo.questionCriteria;
 
@@ -30,8 +31,7 @@ public class QuestionServiceImpl implements QuestionService {
 	
 	/*목록 페이지*/
 	@Override
-	public List<QuestionVO> getListPaging(questionCriteria cri) {
-        
+	public List<QandAVO> getListPaging(questionCriteria cri) {
         return mapper.getListPaging(cri);
 	}
 	

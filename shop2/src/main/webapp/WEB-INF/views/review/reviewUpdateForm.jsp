@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <form action="${path}/review/reviewUpdate" method="POST" enctype="multipart/form-data">
 <!-- PRELOADER -->
 
-<div class="preloader_hide">
+
 <br>
 <br>
 <br>
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	
 	
 
-</div>
+
 </form>
 </c:if>
 </body>

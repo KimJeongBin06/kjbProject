@@ -11,6 +11,7 @@ import com.spring.shop.dao.MemberDAO;
 import com.spring.shop.vo.CartVO;
 import com.spring.shop.vo.MemberVO;
 import com.spring.shop.vo.OrderVO;
+import com.spring.shop.vo.naverVO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -81,6 +82,20 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.idChk(vo);
 	}
 	
+	@Override
+	public int naverChk(String id) {
+		return memberDao.naverChk(id);
+	}
+	
+	@Override
+	public void naverJoin(naverVO naver) {
+		memberDao.naverJoin(naver);
+	}
+	
+	@Override 
+	public MemberVO naverLogin(naverVO naver) {
+		return memberDao.naverLogin(naver);
+	}
 	
 }
 	

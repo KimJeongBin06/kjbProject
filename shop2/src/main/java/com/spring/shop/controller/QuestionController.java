@@ -91,7 +91,7 @@ private static final Logger logger = LoggerFactory.getLogger(QuestionController.
         
         rttr.addFlashAttribute("result", "modify success");
         
-        return "redirect:/question/questionList";
+        return "redirect:/question/questionGet?qbno=" + question.getQbno();
         
     }
     

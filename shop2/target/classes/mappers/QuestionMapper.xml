@@ -41,16 +41,15 @@
     </sql>  
     
     <!-- 게시물 목록(페이징) -->
-    <select id="getListPaging" resultType="com.spring.shop.vo.QuestionVO">
+    <select id="getListPaging" resultType="com.spring.shop.vo.QandAVO">
     
-        select * from (
-                select qbno, qtitle, qwriter, qdate, qupdate 
-                from question 
+
+                select row_number() over(order by q.qdate asc) as bindex, q.*, a.* from question q left join answer a on q.qbno = a.qbno 
                 <if test="keyword != null">
                     <include refid="questionCriteria"></include>
                 </if>
-                order by qbno desc) as T1
-        limit #{skip},#{amount}
+                order by qdate desc
+        limit #{skip},#{amount} 
     
     </select>
 

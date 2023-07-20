@@ -73,7 +73,6 @@
 	
 </script>
 <form name="form1" method="get" action="${path}/review/reviewList">
-<div class="preloader_hide">
 <br>
 <br>
 <br>
@@ -124,7 +123,7 @@
 				
 				<!-- ROW -->
 				<div class="row">
-				
+				<%@ include file="../include/side_menu.jsp" %>
 					<!-- BLOG BLOCK -->
 					<div class="blog_block col-lg-9 col-md-9 padbot50">
 						
@@ -195,7 +194,6 @@
 				</div>	
 	
 
-</div>
 </form>
 </body>
 </html>

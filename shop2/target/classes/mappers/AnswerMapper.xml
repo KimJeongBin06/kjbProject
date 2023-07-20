@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.spring.shop.mapper.AnswerMapper">
+ 	<insert id="answerWrite">
+ 		INSERT INTO answer(atitle, acontent, qbno) VALUE(#{atitle}, #{acontent}, #{qbno})
+ 	</insert>
+ 	
+ 	<select id="getPage" resultType="com.spring.shop.vo.AnswerVO">
+    
+        select * from answer where abno = #{abno}
+    
+    </select>
+    
+    <!-- 게시판 수정 -->
+    <update id="modify">
+    
+        update answer set atitle = #{atitle}, acontent = #{acontent}, aupdate = now() where abno = #{abno}	
+	
+ 	</update>
+ 	
+ 	<!-- 게시판 삭제 -->
+ 	<delete id="delete">
+ 	
+ 		delete from answer where abno = #{abno}
+ 		
+ 	</delete>
+
+  </mapper>

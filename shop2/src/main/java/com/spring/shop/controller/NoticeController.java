@@ -110,7 +110,7 @@ public class NoticeController {
         
         rttr.addFlashAttribute("result", "modify success");
         
-        return "redirect:/notice/noticeList";
+        return "redirect:/notice/noticeGet?nbno=" + notice.getNbno();
         
     }
     

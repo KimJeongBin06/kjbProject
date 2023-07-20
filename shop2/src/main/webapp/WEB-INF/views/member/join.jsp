@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
   <script>
   	$(document).ready(function(){
   		$("#btnJoin").click(function(){
@@ -106,6 +107,9 @@
 	color:red; 
 	display: none;
 	}
+	#naver_id_login{
+	float:right;	
+	}
 </style>
 </head>
 
@@ -136,7 +140,20 @@
             <div class="checkout__form">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
+                        <!-- 네이버 로그인 버튼 노출 영역 -->
+						  <div id="naver_id_login"></div>
+						  <!-- //네이버 로그인 버튼 노출 영역 -->
+						  <script type="text/javascript">
+						  	var naver_id_login = new naver_id_login("client-id", "callback-url");
+						  	var state = naver_id_login.getUniqState();
+						  	naver_id_login.setButton("white", 10,50);
+						  	naver_id_login.setDomain("domainurl");
+						  	naver_id_login.setState(state);
+						  	naver_id_login.init_naver_id_login();
+						  </script>  
                             <h3 class="checkout__title">회원가입</h3>
+                            
+							  <br>
                             <div class="row">
                             </div>
                             <div class="checkout__input">

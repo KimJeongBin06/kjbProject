@@ -2,6 +2,7 @@ package com.spring.shop.mapper;
 
 import java.util.List;
 
+import com.spring.shop.vo.QandAVO;
 import com.spring.shop.vo.QuestionVO;
 import com.spring.shop.vo.questionCriteria;
 
@@ -14,7 +15,7 @@ public interface QuestionMapper {
     public List<QuestionVO> getList();
     
     /* 게시판 목록(페이징) */
-    public List<QuestionVO> getListPaging(questionCriteria cri);
+    public List<QandAVO> getListPaging(questionCriteria cri);
     
     /* 게시판 조회 */
     public QuestionVO getPage(int qbno);

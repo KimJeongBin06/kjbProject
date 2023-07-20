@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script>
 		$(document).ready(function(){
 			$("#btnLogin").click(function(){
@@ -32,7 +33,11 @@
 		})
 </script>
 </head>
-
+<style>
+#naver_id_login{
+	float:right;	
+}
+</style>
 <body>
 <%@ include file="../include/shop_menu.jsp" %>
 <c:if test = "${member == null}">
@@ -59,7 +64,6 @@
     <section class="checkout spad">
         <div class="container">
             <div class="checkout__form">
-                <form action="#">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
 
@@ -75,21 +79,28 @@
                             </div>
 							<button type="button" id="btnLogin" class="site-btn">로그인</button>&nbsp
                            	<button type="button" id="btnJoin" class="site-btn"">회원가입</button>
-                            
+                           	<!-- 네이버 로그인 버튼 노출 영역 -->
+							  <div id="naver_id_login"></div>
+							  <!-- //네이버 로그인 버튼 노출 영역 -->
+							  <script type="text/javascript">
+							  	var naver_id_login = new naver_id_login("client-id", "callback-url");
+							  	var state = naver_id_login.getUniqState();
+							  	naver_id_login.setButton("white", 10,50);
+							  	naver_id_login.setDomain("domainurl");
+							  	naver_id_login.setState(state);
+							  	naver_id_login.init_naver_id_login();
+							  </script>                          
                         </div>
                         
                     </div>
-                </form>
             </div>
-        </div>
-    </section>
-
-
-
+    </div>
+</section>
+</form>
     <!-- Search End -->
 
-</form>
 </c:if>
+
 <c:if test ="${member != null}">
 	<c:if test="${member.verify == 2}">
 		<h2 align="center"> ${member.mid}님 환영합니다. <h2>
@@ -97,13 +108,20 @@
 	 <button type="button" class="btn btn-default btn-lg btn-block" onclick ="location.href='/member/logout'">로그아웃</button>
 	</c:if>
 	
+<section class="checkout spad">
+    <div class="container">	
 	<c:if test="${member.verify != 2}">
 		<h2 align="center"> ${member.mid}님 환영합니다. <h2>
-	  <button type="button" class="btn btn-default btn-lg btn-block" onclick ="location.href='/member/memedit?mid=${member.mid}'">회원정보 수정</button>
-	  <button type="button" class="btn btn-default btn-lg btn-block" onclick ="location.href='/member/logout'">로그아웃</button>
-	</c:if>
-	
+		<div class="col-lg-3">
+		
+    	<%@ include file="../include/side_menu_my.jsp" %>
+<button type="button" class="site-btn">탈퇴하기</button>   	
+</div>
 </c:if>
+</div>
+</section>	
+</c:if>
+
 <script>
 document.addEventListener('keypress', function(event) {
 	  if (event.keyCode === 13 || event.which === 13) {
@@ -112,5 +130,4 @@ document.addEventListener('keypress', function(event) {
 });
 </script>
 </body>
-
 </html>

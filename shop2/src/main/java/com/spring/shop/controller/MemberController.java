@@ -11,15 +11,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.shop.service.MemberService;
 import com.spring.shop.service.ProductService;
 import com.spring.shop.vo.MemberVO;
 import com.spring.shop.vo.OrderVO;
+import com.spring.shop.vo.naverVO;
 
 @Controller
 @RequestMapping("member/*")
@@ -76,7 +80,9 @@ public class MemberController {
 		if(login == null) {
 			session.setAttribute("member", null);
 		} else {
-			session.setAttribute("member", login);
+			if(login.getVerify()!=3) {
+				session.setAttribute("member", login);
+			}			
 		}
 		return null;
 		
@@ -130,7 +136,52 @@ public class MemberController {
 		return countid;
 	}
 	
+	@RequestMapping(value = "member/callback", method = RequestMethod.GET)
+	public void callback() {
+
+	}
 	
+	@RequestMapping(value = "/member/naverLogin", method = RequestMethod.POST)
+    public String naverLogin(naverVO naver, RedirectAttributes redirectAttributes, HttpServletRequest req) {      
+        int access = memberService.naverChk(naver.getId());
+        // Perform any necessary logic here
+        if(access==0) {
+        	redirectAttributes.addFlashAttribute("naver", naver);
+        	return "redirect:/member/naverJoin"; 
+        } else {        	
+        	MemberVO login = memberService.naverLogin(naver);
+        	HttpSession session = req.getSession();
+        	if(login == null) {
+    			session.setAttribute("member", null);
+    		} else {
+    			session.setAttribute("member", login);
+    		}
+        	return "redirect:/member/login";
+        }
+
+        
+    }
+	
+	@RequestMapping(value = "member/naverJoin", method = RequestMethod.GET)
+	public void naverJoin(@ModelAttribute("naver") naverVO naver, Model model) {
+		model.addAttribute("dto", naver);
+		
+	}
+	
+	@RequestMapping(value = "member/naverJoin", method = RequestMethod.POST)
+	public String naverJoinPost(MemberVO vo, naverVO naver, HttpServletRequest req) throws Exception {
+		vo.setVerify(3);
+		naver.setEmail(vo.getMemail());
+		memberService.naverJoin(naver);
+		memberService.insertMember(vo);
+				
+    	HttpSession session = req.getSession();
+
+		session.setAttribute("member", vo);
+
+    	return "redirect:/member/login";
+	}
+
 
 	
 	

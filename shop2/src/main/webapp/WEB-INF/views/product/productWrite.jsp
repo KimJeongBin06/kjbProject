@@ -114,11 +114,6 @@
 <c:if test="${sessionScope.member.verify==2}">
 <form name="form1" action="${path }/product/productInsert" method="post" enctype="multipart/form-data">
 
-<div class="preloader_hide">
-
-
-
-
 	<!-- PAGE -->
 	<div id="page" class="single_page">
 
@@ -291,11 +286,6 @@
  </script>	
 
 	
-
-
-</div>
-
-
 
 
 </form>

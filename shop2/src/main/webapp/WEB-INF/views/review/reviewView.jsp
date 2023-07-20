@@ -64,7 +64,7 @@
     });
     $("#revreplyWrite").click(function() {
         // 제약조건 (대화상자-예(참, true), 아니오(거짓, false))
-        if (confirm("덧글을 작성하시겠습니까?")) {
+        if (confirm("댓글을 작성하시겠습니까?")) {
             // 문서에 form1 id에 action을 지정
             document.form1.action = "${path}/revreply/revreplyWrite";
             // form1 id를 submit 처리
@@ -81,7 +81,6 @@
 <%@ include file="../include/shop_menu.jsp" %>
 <!-- PRELOADER -->
 <form name="form1" method="post">
-<div class="preloader_hide">
 <br>
 <br>
 <br>
@@ -115,7 +114,6 @@
 						<!-- SINGLE BLOG POST -->
 						<div class="single_blog_post clearfix" data-animated="fadeInUp">
 							<div class="single_blog_post_descr">
-							
 								<div class="single_blog_post_date"><fmt:formatDate value="${dto.revdate }" pattern="yyyy-MM-dd HH:mm:ss" /></div>
 								
 								<div class="single_blog_post_title">${dto.revtitle }</div>
@@ -221,7 +219,6 @@
 	
 	
 
-</div>
 </form>
 </body>
 </html>

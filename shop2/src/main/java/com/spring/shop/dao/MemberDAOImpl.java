@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.shop.vo.MemberVO;
 import com.spring.shop.vo.OrderVO;
+import com.spring.shop.vo.naverVO;
 
 @Repository
 public class MemberDAOImpl implements MemberDAO {
@@ -28,7 +29,12 @@ public class MemberDAOImpl implements MemberDAO {
 	// 회원가입
 	@Override
 	public void insertMember(MemberVO vo) throws Exception {
-		sql.insert(namespace + ".insertMember", vo);
+		if(vo.getVerify()==3) {
+			sql.insert(namespace + ".naverMember", vo);
+		} else {
+			sql.insert(namespace + ".insertMember", vo);
+		}
+		
 
 	}
 	
@@ -79,9 +85,20 @@ public class MemberDAOImpl implements MemberDAO {
 		return sql.selectOne(namespace + ".idchk", vo);
 	}
 
+	@Override
+	public int naverChk(String id) {
+		return sql.selectOne(namespace + ".naverchk", id);
+	}
 	
+	@Override
+	public void naverJoin(naverVO naver) {
+		sql.insert(namespace + ".naverjoin", naver);
+	}
 	
-	
+	@Override
+	public MemberVO naverLogin(naverVO naver) {
+		return sql.selectOne(namespace + ".naverLogin", naver);
+	}
 	
 		
 

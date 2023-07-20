@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.spring.shop.vo.MemberVO;
 import com.spring.shop.vo.OrderVO;
+import com.spring.shop.vo.naverVO;
 
 public interface MemberDAO {
 	public List<MemberVO> memberList();
@@ -32,4 +33,10 @@ public interface MemberDAO {
 	
 	//아이디 중복체크
 	public int idChk(MemberVO vo);
+	
+	public int naverChk(String id);
+	
+	public void naverJoin(naverVO naver);
+	
+	public MemberVO naverLogin(naverVO naver);
 }
